@@ -1,13 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
+import Board from './components/Board';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <Board />
         <p>
-          i am learning react
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
