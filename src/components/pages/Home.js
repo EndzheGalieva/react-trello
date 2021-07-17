@@ -17,7 +17,7 @@ class Home extends React.Component {
           board={this.props.boards[key]} />
       ))}
       </div>
-      </div>
+    </div>
     )
   }
 }
