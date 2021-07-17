@@ -7,6 +7,28 @@ class List extends React.Component {
   state = {
     currentCards: []
   }
+  componentDidMount() {
+    this.fetchCards(this.props.list.id)
+  }
+
+  fetchCards = async listId => {
+    try {
+      const cards = await cardsRef
+        .where('card.listId', '==', listId)
+        .orderBy('card.createdAt')
+        .get()
+        cards.forEach(card => {
+        const data = card.data().card
+        const cardObj = {
+          id: card.id,
+          ...data
+        }
+        this.setState({ currentCards: [...this.state.currentCards, cardObj] })
+       })
+    } catch(error) {
+      console.error('Error fetching card', error)
+    }
+  }
   nameInput = React.createRef()
   createNewCard = async (e) => {
     try {
@@ -32,10 +54,10 @@ class List extends React.Component {
         <div className="list-header">
           <p>{this.props.list.title}</p>
         </div>
-        {Object.keys(this.props.list.cards).map(key => (
+        {Object.keys(this.state.currentCards).map(key => (
          <Card
            key={key}
-           data={this.props.list.cards[key]} />
+           data={this.state.currentCards[key]} />
         ))}
         <form
           onSubmit={this.createNewCard}
