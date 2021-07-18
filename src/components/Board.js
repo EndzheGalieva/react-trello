@@ -61,6 +61,11 @@ class Board extends React.Component {
     const boardId = this.props.match.params.boardId
     this.props.deleteBoard(boardId)
   }
+
+  updateBoard = e => {
+    const boardId = this.props.match.params.boardId
+  }
+
   render() {
     return (
       <div
@@ -68,7 +73,12 @@ class Board extends React.Component {
         style={{
           backgroundColor: this.state.currentBoard.background}}>
           <div className="board-header">
-            <h3>{this.state.currentBoard.title}</h3>
+            {/*<h3>{this.state.currentBoard.title}</h3>*/}
+            <input
+              type="text"
+              name="boardTitle"
+              onChange={this.updateBoard}
+              defaultValue={this.state.currentBoard.title}/>
             <button onClick={this.deleteBoard}>Delete board</button>
           </div>
        <div className="lists-wrapper">
@@ -94,7 +104,8 @@ class Board extends React.Component {
 
 Board.propTypes = {
   deleteBoard: PropTypes.func.isRequired,
-  deleteList: PropTypes.func.isRequired
+  deleteList: PropTypes.func.isRequired,
+  updateBoard: PropTypes.func.isRequired
 }
 
 export default Board;
