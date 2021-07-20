@@ -17,7 +17,7 @@ class Board extends React.Component {
 
   getLists = async boardId => {
     try {
-      const lists = await listsRef
+      await listsRef
         .where('list.board', '==', boardId)
         .orderBy('list.createdAt')
         .onSnapshot(snapshot => {
@@ -82,6 +82,7 @@ class Board extends React.Component {
 
   updateBoard = e => {
     const boardId = this.props.match.params.boardId
+    this.props.updateBoard(boardId)
   }
 
   render() {
