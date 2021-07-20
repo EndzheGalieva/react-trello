@@ -27,7 +27,11 @@ class Board extends React.Component {
           this.setState({ currentLists: [...this.state.currentLists, listObj]})
         })
     } catch(error) {
+<<<<<<< HEAD
       console.log('Error fetching lisrs: ', error)
+=======
+      console.log('Error fetching lists: ', error)
+>>>>>>> 844edb7 (Deleting cards and lists from Firebase)
     }
   }
 
@@ -46,7 +50,7 @@ class Board extends React.Component {
       const list = {
         title: this.addBoardInput.current.value,
         board: this.props.match.params.boardId,
-        creadedAt: new Date(),
+        createdAt: new Date(),
       }
       if (list.title && list.board) {
         await listsRef.add({ list })
