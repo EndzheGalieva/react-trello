@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import PageNotFound from "./components/pages/PageNotFound";
 import {boardsRef, cardsRef, listsRef} from './firebase';
 import { AuthProvider } from "./components/AuthContext";
-
+import UserForm from './components/UserForm';
 class App extends React.Component {
   state = {
     boards: []
@@ -98,6 +98,10 @@ class App extends React.Component {
         <BrowserRouter>
           <AuthProvider>
           <Switch>
+            <Route
+              extact
+              path="/"
+              component={UserForm} />
           <Route
             exact
             path="/:userId/boards"
