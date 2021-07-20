@@ -1,7 +1,6 @@
 import React from 'react';
-import Board from './Board';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class BoardPreview extends React.Component {
 goToBoard = () => {
