@@ -1,6 +1,6 @@
 import React from 'react';
 import List from './List';
-import { boardsRef, listsRef } from '../firebase';
+import {boardsRef, listsRef} from '../firebase';
 import PropTypes from 'prop-types';
 
 class Board extends React.Component {
@@ -8,37 +8,35 @@ class Board extends React.Component {
     currentBoard: {},
     currentLists: []
   }
+
   componentDidMount() {
-   this.getBoard(this.props.match.params.boardId)
-   this.getLists(this.props.match.params.boardId)
+    this.getBoard(this.props.match.params.boardId)
+    this.getLists(this.props.match.params.boardId)
   }
+
   getLists = async boardId => {
     try {
       const lists = await listsRef
         .where('list.board', '==', boardId)
         .orderBy('list.createdAt')
         .get()
-        lists.forEach(list => {
-          const data = list.data().list
-          const listObj = {
-            id: list.id,
-            ...data
-          }
-          this.setState({ currentLists: [...this.state.currentLists, listObj]})
-        })
-    } catch(error) {
-<<<<<<< HEAD
-      console.log('Error fetching lisrs: ', error)
-=======
+      lists.forEach(list => {
+        const data = list.data().list
+        const listObj = {
+          id: list.id,
+          ...data
+        }
+        this.setState({currentLists: [...this.state.currentLists, listObj]})
+      })
+    } catch (error) {
       console.log('Error fetching lists: ', error)
->>>>>>> 844edb7 (Deleting cards and lists from Firebase)
     }
   }
 
   getBoard = async boardId => {
     try {
       const board = await boardsRef.doc(boardId).get()
-      this.setState({ currentBoard: board.data().board })
+      this.setState({currentBoard: board.data().board})
     } catch (error) {
       console.log('Error getting boards', error)
     }
@@ -53,7 +51,7 @@ class Board extends React.Component {
         createdAt: new Date(),
       }
       if (list.title && list.board) {
-        await listsRef.add({ list })
+        await listsRef.add({list})
       }
       this.addBoardInput.current.value = ''
     } catch (error) {
@@ -75,31 +73,32 @@ class Board extends React.Component {
       <div
         className="board-wrapper"
         style={{
-          backgroundColor: this.state.currentBoard.background}}>
-          <div className="board-header">
-            {/*<h3>{this.state.currentBoard.title}</h3>*/}
-            <input
-              type="text"
-              name="boardTitle"
-              onChange={this.updateBoard}
-              defaultValue={this.state.currentBoard.title}/>
-            <button onClick={this.deleteBoard}>Delete board</button>
-          </div>
-       <div className="lists-wrapper">
-         {Object.keys(this.state.currentLists).map(key => (
-           <List
-             key={this.state.currentLists[key].id}
-             list={this.state.currentLists[key]}
-             deleteList={this.props.deleteList} />
-         ))}
-       </div>
-      <form onSubmit={this.createNewList}
-        className="new-list-wrapper">
+          backgroundColor: this.state.currentBoard.background
+        }}>
+        <div className="board-header">
+          {/*<h3>{this.state.currentBoard.title}</h3>*/}
           <input
-          type="text"
-          ref={this.addBoardInput}
-          name="name"
-          placeholder=" + New List" />
+            type="text"
+            name="boardTitle"
+            onChange={this.updateBoard}
+            defaultValue={this.state.currentBoard.title}/>
+          <button onClick={this.deleteBoard}>Delete board</button>
+        </div>
+        <div className="lists-wrapper">
+          {Object.keys(this.state.currentLists).map(key => (
+            <List
+              key={this.state.currentLists[key].id}
+              list={this.state.currentLists[key]}
+              deleteList={this.props.deleteList}/>
+          ))}
+        </div>
+        <form onSubmit={this.createNewList}
+              className="new-list-wrapper">
+          <input
+            type="text"
+            ref={this.addBoardInput}
+            name="name"
+            placeholder=" + New List"/>
         </form>
       </div>
     )
