@@ -5,6 +5,7 @@ import Home from './components/pages/Home';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import PageNotFound from "./components/pages/PageNotFound";
 import {boardsRef, cardsRef, listsRef} from './firebase';
+import { AuthProvider } from "./components/AuthContext";
 
 class App extends React.Component {
   state = {
@@ -95,6 +96,7 @@ class App extends React.Component {
     return (
       <div>
         <BrowserRouter>
+          <AuthProvider>
           <Switch>
           <Route
             exact
@@ -118,11 +120,12 @@ class App extends React.Component {
               />
             )}
           />
-          <Route component={PageNotFound} />
+            <Route component={PageNotFound} />
           {/*<Home boards={this.state.boards}*/}
           {/*   createNewBoard={this.createNewBoard} />*/}
           {/*<Board />*/}
           </Switch>
+          </AuthProvider>
         </BrowserRouter>
       </div>
     );

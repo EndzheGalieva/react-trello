@@ -46,7 +46,7 @@ class List extends React.Component {
                 labels: doc.data().card.labels
               }
               if (change.type === 'added') {
-                this.setState({currentCards: [...this.state.currentCards, cards]})
+                this.setState({currentCards: [...this.state.currentCards, card]})
               }
               if (change.type === 'removed') {
                 this.setState({
