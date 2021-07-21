@@ -1,11 +1,13 @@
 import React from 'react';
 import { firebaseAuth } from '../firebase';
+import { withRouter } from 'react-router-dom';
 
 const AuthContext = React.createContext()
 
 class AuthProvider extends React.Component {
   state = {
-    user: {}
+    user: {},
+    authMessage: ''
   }
 
   componentWillMount() {
@@ -32,8 +34,11 @@ class AuthProvider extends React.Component {
         email,
         password
       )
+      this.props.history.push(`/${this.state.user.id}/boards`)
     } catch(error) {
-      // will add error handling soon...
+      this.setState({
+        authMessage: error.message
+      })
     }
   }
 
@@ -44,9 +49,12 @@ class AuthProvider extends React.Component {
         email,
         password
       )
+      this.props.history.push(`/${this.state.user.id}/boards`)
       console.log('logged in')
     } catch (error) {
-
+      this.setState({
+        authMessage: error.message
+      })
     }
   }
 
@@ -56,9 +64,12 @@ class AuthProvider extends React.Component {
       this.setState({
         user: {}
       })
+      this.props.history.push(`/`)
       console.log('signed out')
     } catch(error) {
-
+      this.setState({
+        authMessage: error.messages
+      })
     }
   }
 
@@ -69,7 +80,8 @@ class AuthProvider extends React.Component {
           user: this.state.user,
           signUp: this.signUp,
           logIn: this.logIn,
-          logOut: this.logOut
+          logOut: this.logOut,
+          authMessage: this.state.authMessage
         }}>
         {this.props.children}
       </AuthContext.Provider>
@@ -78,5 +90,5 @@ class AuthProvider extends React.Component {
 }
 
 const AuthConsumer = AuthContext.Consumer
-
-export { AuthProvider, AuthConsumer }
+export default withRouter(AuthProvider)
+export { AuthConsumer }
