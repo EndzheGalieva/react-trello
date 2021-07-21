@@ -7,6 +7,8 @@ import PageNotFound from "./components/pages/PageNotFound";
 import {boardsRef, cardsRef, listsRef} from './firebase';
 import { AuthProvider } from "./components/AuthContext";
 import UserForm from './components/UserForm';
+import Header from './components/Header';
+
 class App extends React.Component {
   state = {
     boards: []
@@ -97,6 +99,7 @@ class App extends React.Component {
       <div>
         <BrowserRouter>
           <AuthProvider>
+           <Header />
           <Switch>
             <Route
               extact
