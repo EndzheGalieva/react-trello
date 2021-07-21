@@ -102,7 +102,7 @@ class App extends React.Component {
            <Header />
           <Switch>
             <Route
-              extact
+              exact
               path="/"
               component={UserForm} />
           <Route
